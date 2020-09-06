@@ -91,21 +91,12 @@ namespace VSCELicense_WixSharpInstaller
                 TaskDefinition td = ts.NewTask();
                 ExecAction ea = new ExecAction();
                 ea.Path = "powershell.exe";
-                string PSCommand = @"
-Import-Module VSCELicense;
-@('VS2019','VS2017','VS2015') | ForEach-Object {
-    try {
-   
-        Get-VSCELicenseExpirationDate -Version `$_;
-        Set-VSCELicenseExpirationDate -Version `$_;       
-    } catch {
-        Write-Verbose ""`$_ seems not be installed""
-    }
-}
-";
+                string PSCommand = @"Import-Module VSCELicense; Set-VSCELicenseExpirationDate";
                 ea.Arguments = $"-command \"{PSCommand}\"";
                 
                 td.Actions.Add(ea);
+                
+                td.Settings.StartWhenAvailable = true;
                 td.Principal.LogonType = TaskLogonType.ServiceAccount;
                 td.Principal.UserId = "SYSTEM";
                 td.Principal.RunLevel = TaskRunLevel.Highest;
