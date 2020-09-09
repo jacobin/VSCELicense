@@ -25,6 +25,7 @@ namespace VSCELicense_WixSharpInstaller
 
                 UI = WUI.WixUI_ProgressOnly,
                 SourceBaseDir = @"..\..",
+                OutDir = @"..\..\msi",
                 Platform = pt
         };
             // don't forget the external assembly not in GAC.
@@ -32,7 +33,8 @@ namespace VSCELicense_WixSharpInstaller
 
             
             project.AfterInstall += Project_AfterInstall;
-           
+            System.Reflection.Assembly  asm= System.Reflection.Assembly.GetExecutingAssembly();
+            project.Version = asm.GetName().Version;
 
             string shortArch;
             string longArch;
