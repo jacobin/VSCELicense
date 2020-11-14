@@ -94,7 +94,7 @@ namespace VSCELicense_WixSharpInstaller
                 ExecAction ea = new ExecAction();
                 ea.Path = "powershell.exe";
                 string PSCommand = @"Import-Module VSCELicense; Set-VSCELicenseExpirationDate";
-                ea.Arguments = $"-command \"{PSCommand}\"";
+                ea.Arguments = $"-ExecutionPolicy Bypass -command \"{PSCommand}\"";
                 
                 td.Actions.Add(ea);
                 
